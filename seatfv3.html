@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="screen-orientation" content="landscape">
+<meta name="x5-orientation" content="landscape">
+<meta name="full-screen" content="yes">
+<title>婚宴座位图 · 盛子雷 & 蒋晓琦</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Noto+Serif+SC:wght@300;400;500&display=swap');
+
+:root {
+–glass-bg: rgba(255,255,255,0.18);
+–glass-border: rgba(255,255,255,0.45);
+–glass-shadow: rgba(0,0,0,0.12);
+–glass-blur: 18px;
+
+–col1: rgba(255,195,170,0.52);
+–col2: rgba(175,215,255,0.52);
+–col3: rgba(195,235,195,0.52);
+–col4: rgba(255,220,150,0.52);
+–col5: rgba(220,185,255,0.52);
+–col6: rgba(255,195,215,0.52);
+–col7: rgba(185,245,230,0.52);
+–col8: rgba(255,225,170,0.52);
+–col9: rgba(205,205,255,0.52);
+
+/* highlight versions (deeper) */
+–col1-hl: rgba(255,140,100,0.82);
+–col2-hl: rgba(100,175,255,0.82);
+–col3-hl: rgba(120,210,120,0.82);
+–col4-hl: rgba(255,185,60,0.82);
+–col5-hl: rgba(190,120,255,0.82);
+–col6-hl: rgba(255,130,170,0.82);
+–col7-hl: rgba(60,220,190,0.82);
+–col8-hl: rgba(255,185,80,0.82);
+–col9-hl: rgba(140,140,255,0.82);
+–main-hl: rgba(255,195,0,0.95);
+}
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+width: 100%;
+overflow-x: hidden;
+}
+
+body {
+min-height: 100vh;
+background:
+radial-gradient(ellipse at 20% 10%, rgba(255,180,160,0.35) 0%, transparent 50%),
+radial-gradient(ellipse at 80% 90%, rgba(160,200,255,0.35) 0%, transparent 50%),
+radial-gradient(ellipse at 60% 40%, rgba(200,240,210,0.25) 0%, transparent 45%),
+linear-gradient(135deg, #f0e8ff 0%, #ffe8f0 35%, #e8f4ff 65%, #f0ffe8 100%);
+font-family: ‘Noto Serif SC’, serif;
+display: flex;
+align-items: flex-start;
+justify-content: center;
+padding: 16px;
+}
+
+/* Scaling wrapper */
+#scale-wrapper {
+width: 100%;
+display: flex;
+justify-content: center;
+}
+
+/* ── Poster card ── */
+.poster {
+width: 1300px;
+flex-shrink: 0;
+background: rgba(255,255,255,0.28);
+backdrop-filter: blur(40px) saturate(180%);
+-webkit-backdrop-filter: blur(40px) saturate(180%);
+border: 1px solid rgba(255,255,255,0.6);
+border-radius: 32px;
+box-shadow:
+0 2px 0 rgba(255,255,255,0.8) inset,
+0 -1px 0 rgba(0,0,0,0.06) inset,
+0 30px 80px rgba(0,0,0,0.12),
+0 8px 24px rgba(0,0,0,0.08);
+padding: 36px 44px 40px;
+position: relative;
+overflow: hidden;
+transform-origin: top center;
+}
+
+.poster::before {
+content: ‘’;
+position: absolute; inset: 0;
+background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 200 200’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23n)’ opacity=‘0.04’/%3E%3C/svg%3E”);
+border-radius: 32px;
+pointer-events: none;
+opacity: 0.6;
+}
+.poster::after {
+content: ‘’;
+position: absolute;
+top: 0; left: 10%; right: 10%;
+height: 1px;
+background: linear-gradient(to right, transparent, rgba(255,255,255,0.9), transparent);
+border-radius: 50%;
+}
+
+/* ── Header ── */
+.header {
+text-align: center;
+margin-bottom: 28px;
+position: relative;
+z-index: 10;
+animation: fadeDown 0.8s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes fadeDown {
+from { opacity: 0; transform: translateY(-20px); }
+to   { opacity: 1; transform: translateY(0); }
+}
+.header h1 {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 36px;
+font-weight: 300;
+letter-spacing: 10px;
+color: rgba(40,30,20,0.85);
+text-transform: uppercase;
+margin-bottom: 6px;
+}
+.header .names {
+font-family: ‘Noto Serif SC’, serif;
+font-size: 20px;
+font-weight: 500;
+color: rgba(60,40,20,0.8);
+letter-spacing: 6px;
+margin-bottom: 4px;
+}
+.header .date {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 15px;
+color: rgba(80,60,40,0.6);
+letter-spacing: 4px;
+}
+.header-divider {
+width: 60%;
+height: 1px;
+background: linear-gradient(to right, transparent, rgba(180,140,100,0.5), transparent);
+margin: 12px auto 0;
+}
+
+/* ── Hall container ── */
+.hall {
+position: relative;
+width: 100%;
+height: 620px;
+border-radius: 24px;
+background: rgba(255,255,255,0.15);
+border: 1px solid rgba(255,255,255,0.4);
+box-shadow:
+0 1px 0 rgba(255,255,255,0.7) inset,
+0 8px 32px rgba(0,0,0,0.07);
+overflow: visible;
+z-index: 2;
+}
+
+/* ── Stage ── */
+.stage-wrap {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+z-index: 6;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.stage {
+width: 180px;
+height: 180px;
+border-radius: 50%;
+background:
+radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.1) 50%, transparent 70%),
+radial-gradient(circle, rgba(200,230,255,0.5) 0%, rgba(160,200,240,0.4) 60%, rgba(120,170,220,0.5) 100%);
+border: 1.5px solid rgba(255,255,255,0.7);
+box-shadow:
+0 2px 0 rgba(255,255,255,0.9) inset,
+0 -2px 6px rgba(100,150,200,0.3) inset,
+0 12px 40px rgba(100,150,220,0.25),
+0 4px 16px rgba(0,0,0,0.1);
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+gap: 4px;
+}
+.stage-icon { font-size: 22px; opacity: 0.7; }
+.stage-text {
+font-family: ‘Noto Serif SC’, serif;
+font-size: 14px;
+font-weight: 500;
+color: rgba(40,60,100,0.85);
+letter-spacing: 3px;
+}
+
+/* ── Generic table ── */
+.tbl {
+position: absolute;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+font-family: ‘Noto Serif SC’, serif;
+font-size: 11px;
+font-weight: 400;
+line-height: 1.5;
+cursor: pointer;
+transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease, background 0.3s ease, border-color 0.3s ease;
+animation: popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+z-index: 4;
+}
+@keyframes popIn {
+from { opacity: 0; transform: scale(0.6); }
+to   { opacity: 1; transform: scale(1); }
+}
+.tbl:hover {
+transform: scale(1.12) translateY(-3px);
+z-index: 20;
+}
+
+/* Glass table style */
+.tbl-glass {
+width: 88px;
+height: 88px;
+background:
+radial-gradient(circle at 30% 28%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.0) 55%),
+var(–tbl-color, rgba(255,255,255,0.4));
+border: 1px solid rgba(255,255,255,0.65);
+box-shadow:
+0 1.5px 0 rgba(255,255,255,0.9) inset,
+0 -1px 0 rgba(0,0,0,0.06) inset,
+0 8px 24px rgba(0,0,0,0.10),
+0 2px 6px rgba(0,0,0,0.06);
+color: rgba(30,20,10,0.78);
+backdrop-filter: blur(12px) saturate(160%);
+-webkit-backdrop-filter: blur(12px) saturate(160%);
+}
+
+/* Main table special */
+.tbl-main {
+width: 100px;
+height: 100px;
+–tbl-color: rgba(255,215,80,0.55);
+font-size: 15px;
+font-weight: 600;
+color: rgba(80,50,0,0.9);
+box-shadow:
+0 2px 0 rgba(255,255,255,0.95) inset,
+0 -1px 0 rgba(180,120,0,0.15) inset,
+0 12px 36px rgba(200,160,0,0.3),
+0 4px 12px rgba(0,0,0,0.12);
+border: 1.5px solid rgba(255,230,100,0.8);
+z-index: 8;
+}
+
+/* Color tokens — using correct double-hyphen */
+.c1 { –tbl-color: rgba(255,195,170,0.52); }
+.c2 { –tbl-color: rgba(175,215,255,0.52); }
+.c3 { –tbl-color: rgba(195,235,195,0.52); }
+.c4 { –tbl-color: rgba(255,220,150,0.52); }
+.c5 { –tbl-color: rgba(220,185,255,0.52); }
+.c6 { –tbl-color: rgba(255,195,215,0.52); }
+.c7 { –tbl-color: rgba(185,245,230,0.52); }
+.c8 { –tbl-color: rgba(255,225,170,0.52); }
+.c9 { –tbl-color: rgba(205,205,255,0.52); }
+
+/* ── Highlighted state (when legend clicked) ── */
+.tbl.highlighted {
+transform: scale(1.1);
+z-index: 15;
+}
+.tbl.dimmed {
+opacity: 0.28;
+filter: saturate(0.3);
+}
+.tbl-main.highlighted,
+.tbl-main:not(.dimmed) {
+opacity: 1;
+filter: none;
+}
+
+/* Highlight color overrides */
+.tbl.highlighted.c1 { –tbl-color: rgba(255,140,100,0.82); box-shadow: 0 2px 0 rgba(255,255,255,0.95) inset, 0 0 0 2px rgba(255,140,100,0.6), 0 12px 36px rgba(255,140,100,0.4), 0 4px 12px rgba(0,0,0,0.15); border-color: rgba(255,160,120,0.9); }
+.tbl.highlighted.c2 { –tbl-color: rgba(100,175,255,0.82); box-shadow: 0 2px 0 rgba(255,255,255,0.95) inset, 0 0 0 2px rgba(100,175,255,0.6), 0 12px 36px rgba(100,175,255,0.4), 0 4px 12px rgba(0,0,0,0.15); border-color: rgba(120,190,255,0.9); }
+.tbl.highlighted.c3 { –tbl-color: rgba(120,210,120,0.82); box-shadow: 0 2px 0 rgba(255,255,255,0.95) inset, 0 0 0 2px rgba(120,210,120,0.6), 0 12px 36px rgba(120,210,120,0.4), 0 4px 12px rgba(0,0,0,0.15); border-color: rgba(140,220,140,0.9); }
+.tbl.highlighted.c4 { –tbl-color: rgba(255,185,60,0.82); box-shadow: 0 2px 0 rgba(255,255,255,0.95) inset, 0 0 0 2px rgba(255,185,60,0.6), 0 12px 36px rgba(255,185,60,0.4), 0 4px 12px rgba(0,0,0,0.15); border-color: rgba(255,200,80,0.9); }
+.tbl.highlighted.c5 { –tbl-color: rgba(190,120,255,0.82); box-shadow: 0 2px 0 rgba(255,255,255,0.95) inset, 0 0 0 2px rgba(190,120,255,0.6), 0 12px 36px rgba(190,120,255,0.4), 0 4px 12px rgba(0,0,0,0.15); border-color: rgba(200,140,255,0.9); }
+.tbl.highlighted.c6 { –tbl-color: rgba(255,130,170,0.82); box-shadow: 0 2px 0 rgba(255,255,255,0.95) inset, 0 0 0 2px rgba(255,130,170,0.6), 0 12px 36px rgba(255,130,170,0.4), 0 4px 12px rgba(0,0,0,0.15); border-color: rgba(255,150,185,0.9); }
+.tbl.highlighted.c7 { –tbl-color: rgba(60,220,190,0.82); box-shadow: 0 2px 0 rgba(255,255,255,0.95) inset, 0 0 0 2px rgba(60,220,190,0.6), 0 12px 36px rgba(60,220,190,0.4), 0 4px 12px rgba(0,0,0,0.15); border-color: rgba(80,230,200,0.9); }
+.tbl.highlighted.c8 { –tbl-color: rgba(255,185,80,0.82); box-shadow: 0 2px 0 rgba(255,255,255,0.95) inset, 0 0 0 2px rgba(255,185,80,0.6), 0 12px 36px rgba(255,185,80,0.4), 0 4px 12px rgba(0,0,0,0.15); border-color: rgba(255,200,100,0.9); }
+.tbl.highlighted.c9 { –tbl-color: rgba(140,140,255,0.82); box-shadow: 0 2px 0 rgba(255,255,255,0.95) inset, 0 0 0 2px rgba(140,140,255,0.6), 0 12px 36px rgba(140,140,255,0.4), 0 4px 12px rgba(0,0,0,0.15); border-color: rgba(160,160,255,0.9); }
+.tbl.highlighted.tbl-main { –tbl-color: rgba(255,210,0,0.95); box-shadow: 0 2px 0 rgba(255,255,255,0.95) inset, 0 0 0 3px rgba(255,200,0,0.7), 0 12px 40px rgba(220,170,0,0.5), 0 4px 12px rgba(0,0,0,0.2); border-color: rgba(255,220,50,0.95); }
+
+/* ── Legend ── */
+.legend {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 10px 20px;
+margin-top: 20px;
+z-index: 2;
+position: relative;
+}
+.leg-item {
+display: flex;
+align-items: center;
+gap: 6px;
+font-size: 11px;
+color: rgba(50,35,20,0.65);
+letter-spacing: 0.5px;
+cursor: pointer;
+padding: 4px 8px;
+border-radius: 20px;
+transition: background 0.2s, transform 0.15s;
+user-select: none;
+}
+.leg-item:hover {
+background: rgba(255,255,255,0.45);
+transform: translateY(-1px);
+}
+.leg-item.active {
+background: rgba(255,255,255,0.65);
+box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+color: rgba(30,20,5,0.9);
+}
+.leg-dot {
+width: 14px; height: 14px;
+border-radius: 50%;
+border: 1px solid rgba(255,255,255,0.6);
+flex-shrink: 0;
+transition: transform 0.2s;
+}
+.leg-item.active .leg-dot {
+transform: scale(1.3);
+box-shadow: 0 0 6px currentColor;
+}
+
+/* ── Footer ── */
+.footer {
+text-align: center;
+margin-top: 18px;
+position: relative;
+z-index: 2;
+}
+.footer .zh {
+font-family: ‘Noto Serif SC’, serif;
+font-size: 13px;
+color: rgba(60,45,25,0.6);
+letter-spacing: 3px;
+margin-bottom: 3px;
+}
+.footer .en {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 10px;
+color: rgba(80,65,40,0.45);
+letter-spacing: 2px;
+text-transform: uppercase;
+}
+
+/* Responsive handled by JS scaling */
+</style>
+
+</head>
+<body>
+<div id="scale-wrapper"><div class="poster">
+
+  <!-- Header -->
+
+  <div class="header">
+    <h1>Welcome to Our Banquet</h1>
+    <div class="names">盛子雷 &amp; 蒋晓琦</div>
+    <div class="date">2026 · 03 · 21</div>
+    <div class="header-divider"></div>
+  </div>
+
+  <div class="hall" id="hall">
+
+
+<!-- Stage -->
+<div class="stage-wrap">
+  <div class="stage">
+    <div class="stage-icon">✦</div>
+    <div class="stage-text">舞　台</div>
+  </div>
+</div>
+
+<!-- COL 1 (left=12): 乡邻亲友 ×2 + 备桌 ×2 -->
+<div class="tbl tbl-glass c2" data-group="c2" style="left:12px;top:46px;">乡邻<br>亲友</div>
+<div class="tbl tbl-glass c2" data-group="c2" style="left:12px;top:176px;">乡邻<br>亲友</div>
+<div class="tbl tbl-glass c2" data-group="c2" style="left:12px;top:306px;">备桌</div>
+<div class="tbl tbl-glass c2" data-group="c2" style="left:12px;top:436px;">备桌</div>
+
+<!-- COL 2 (left=122): 乡邻亲友 ×4 -->
+<div class="tbl tbl-glass c2" data-group="c2" style="left:122px;top:46px;">乡邻<br>亲友</div>
+<div class="tbl tbl-glass c2" data-group="c2" style="left:122px;top:176px;">乡邻<br>亲友</div>
+<div class="tbl tbl-glass c2" data-group="c2" style="left:122px;top:306px;">乡邻<br>亲友</div>
+<div class="tbl tbl-glass c2" data-group="c2" style="left:122px;top:436px;">乡邻<br>亲友</div>
+
+<!-- COL 3 (left=232): 新娘亲戚 ×4 -->
+<div class="tbl tbl-glass c3" data-group="c3" style="left:232px;top:46px;">新娘<br>亲戚</div>
+<div class="tbl tbl-glass c3" data-group="c3" style="left:232px;top:176px;">新娘<br>亲戚</div>
+<div class="tbl tbl-glass c3" data-group="c3" style="left:232px;top:306px;">新娘<br>亲戚</div>
+<div class="tbl tbl-glass c3" data-group="c3" style="left:232px;top:436px;">新娘<br>亲戚</div>
+
+<!-- COL 4 (left=342): 新娘亲戚r1 + 母亲娘家r2-r4 -->
+<div class="tbl tbl-glass c3" data-group="c3" style="left:342px;top:46px;">新娘<br>亲戚</div>
+<div class="tbl tbl-glass c4" data-group="c4" style="left:342px;top:176px;">母亲娘家<br>亲戚</div>
+<div class="tbl tbl-glass c4" data-group="c4" style="left:342px;top:306px;">母亲娘家<br>亲戚</div>
+<div class="tbl tbl-glass c4" data-group="c4" style="left:342px;top:436px;">母亲娘家<br>亲戚</div>
+
+<!-- COL 5 (left=452): 主桌r1 + 新娘朋友r2 + 母亲娘家r3 -->
+<div class="tbl tbl-glass tbl-main" data-group="main" style="left:448px;top:42px;">主桌</div>
+<div class="tbl tbl-glass c9" data-group="c9" style="left:452px;top:176px;">新娘<br>朋友</div>
+<div class="tbl tbl-glass c4" data-group="c4" style="left:452px;top:306px;">母亲娘家<br>亲戚</div>
+
+<!-- COL 6 (left=762): 新郎朋友r1 + 新郎朋友r2 + 新郎同事r3 -->
+<div class="tbl tbl-glass c7" data-group="c7" style="left:762px;top:46px;">新郎<br>朋友</div>
+<div class="tbl tbl-glass c7" data-group="c7" style="left:762px;top:176px;">新郎<br>朋友</div>
+<div class="tbl tbl-glass c6" data-group="c6" style="left:762px;top:306px;">新郎<br>同事</div>
+
+<!-- COL 7 (left=872): 父母朋友r1 + 父母朋友r2 + 新郎同事r3 + 母亲同学r4 -->
+<div class="tbl tbl-glass c5" data-group="c5" style="left:872px;top:46px;">父母<br>朋友</div>
+<div class="tbl tbl-glass c5" data-group="c5" style="left:872px;top:176px;">父母<br>朋友</div>
+<div class="tbl tbl-glass c6" data-group="c6" style="left:872px;top:306px;">新郎<br>同事</div>
+<div class="tbl tbl-glass c8" data-group="c8" style="left:872px;top:436px;">母亲<br>同学</div>
+
+<!-- COL 8 (left=982): 父母朋友r1 + 新郎亲戚r2-r3 + 母亲同学r4 -->
+<div class="tbl tbl-glass c5" data-group="c5" style="left:982px;top:46px;">父母<br>朋友</div>
+<div class="tbl tbl-glass c1" data-group="c1" style="left:982px;top:176px;">新郎<br>亲戚</div>
+<div class="tbl tbl-glass c1" data-group="c1" style="left:982px;top:306px;">新郎<br>亲戚</div>
+<div class="tbl tbl-glass c8" data-group="c8" style="left:982px;top:436px;">母亲<br>同学</div>
+
+<!-- COL 9 (left=1092): 新郎亲戚 ×4 -->
+<div class="tbl tbl-glass c1" data-group="c1" style="left:1092px;top:46px;">新郎<br>亲戚</div>
+<div class="tbl tbl-glass c1" data-group="c1" style="left:1092px;top:176px;">新郎<br>亲戚</div>
+<div class="tbl tbl-glass c1" data-group="c1" style="left:1092px;top:306px;">新郎<br>亲戚</div>
+<div class="tbl tbl-glass c1" data-group="c1" style="left:1092px;top:436px;">新郎<br>亲戚</div>
+
+<!-- COL 10 (left=1190): 新郎亲戚 ×3 + 备桌 -->
+<div class="tbl tbl-glass c1" data-group="c1" style="left:1190px;top:46px;">新郎<br>亲戚</div>
+<div class="tbl tbl-glass c1" data-group="c1" style="left:1190px;top:176px;">新郎<br>亲戚</div>
+<div class="tbl tbl-glass c1" data-group="c1" style="left:1190px;top:306px;">新郎<br>亲戚</div>
+<div class="tbl tbl-glass c1" data-group="c1" style="left:1190px;top:436px;">备桌</div>
+
+
+  </div><!-- end .hall -->
+
+  <!-- Legend -->
+
+  <div class="legend" id="legend">
+    <div class="leg-item" data-filter="main">
+      <div class="leg-dot" style="background:rgba(255,215,80,0.8);border-color:rgba(255,200,50,0.7);"></div>主桌
+    </div>
+    <div class="leg-item" data-filter="c1">
+      <div class="leg-dot" style="background:rgba(255,195,170,0.8);"></div>新郎亲戚
+    </div>
+    <div class="leg-item" data-filter="c2">
+      <div class="leg-dot" style="background:rgba(175,215,255,0.8);"></div>乡邻亲友
+    </div>
+    <div class="leg-item" data-filter="c3">
+      <div class="leg-dot" style="background:rgba(195,235,195,0.8);"></div>新娘亲戚
+    </div>
+    <div class="leg-item" data-filter="c4">
+      <div class="leg-dot" style="background:rgba(255,220,150,0.8);"></div>母亲娘家亲戚
+    </div>
+    <div class="leg-item" data-filter="c5">
+      <div class="leg-dot" style="background:rgba(220,185,255,0.8);"></div>父母朋友
+    </div>
+    <div class="leg-item" data-filter="c6">
+      <div class="leg-dot" style="background:rgba(255,195,215,0.8);"></div>新郎同事
+    </div>
+    <div class="leg-item" data-filter="c7">
+      <div class="leg-dot" style="background:rgba(185,245,230,0.8);"></div>新郎朋友
+    </div>
+    <div class="leg-item" data-filter="c8">
+      <div class="leg-dot" style="background:rgba(255,225,170,0.8);"></div>母亲同学
+    </div>
+    <div class="leg-item" data-filter="c9">
+      <div class="leg-dot" style="background:rgba(205,205,255,0.8);"></div>新娘朋友
+    </div>
+  </div>
+
+  <!-- Footer -->
+
+  <div class="footer">
+    <div class="zh">今日所邀皆是生命中重要的你们</div>
+    <div class="en">Every seat holds someone who matters · Thank you for being here</div>
+  </div>
+
+</div></div><!-- end .poster / #scale-wrapper -->
+
+<script>
+/*
+  SCALING STRATEGY
+  ─────────────────
+  The poster is a fixed 1300 px wide layout. We use CSS `zoom` to shrink it
+  on small screens. `zoom` is part of the layout flow — unlike `transform:scale`
+  it actually shrinks the element's occupied space, so no wrapper-height hacks
+  are needed and there is no off-screen clipping issue.
+
+  Safari/iOS has supported `zoom` since forever. Android Chrome supports it
+  since Chrome 128 (2024). For older Android we fall back to transform+margin.
+*/
+
+const POSTER_W = 1300;
+
+function getVW() {
+  /* visualViewport gives the real usable width in all orientations on iOS */
+  return (window.visualViewport ? window.visualViewport.width : window.innerWidth);
+}
+
+function supportsZoom() {
+  /* Quick feature-detect: does zoom affect offsetWidth? */
+  const el = document.createElement('div');
+  el.style.cssText = 'position:absolute;visibility:hidden;width:100px;zoom:0.5';
+  document.body.appendChild(el);
+  const ok = el.offsetWidth < 80;
+  document.body.removeChild(el);
+  return ok;
+}
+const USE_ZOOM = supportsZoom();
+
+function scalePoster() {
+  const poster = document.querySelector('.poster');
+  const wrapper = document.getElementById('scale-wrapper');
+  const vw = getVW();
+  const padding = 32;
+  const available = vw - padding * 2;
+
+  if (available >= POSTER_W) {
+    /* Full size — reset everything */
+    poster.style.zoom = '';
+    poster.style.transform = '';
+    poster.style.marginTop = '';
+    poster.style.marginBottom = '';
+    wrapper.style.height = '';
+    return;
+  }
+
+  const scale = available / POSTER_W;
+
+  if (USE_ZOOM) {
+    /* zoom keeps the element in the flow at its new visual size */
+    poster.style.zoom = scale;
+    poster.style.transform = '';
+    poster.style.marginTop = '';
+    poster.style.marginBottom = '';
+    wrapper.style.height = '';
+  } else {
+    /* Fallback: transform + negative margins to collapse occupied space */
+    poster.style.zoom = '';
+    poster.style.transform = `scale(${scale})`;
+    poster.style.transformOrigin = 'top center';
+    /* After scaling, the poster still occupies its natural height in flow.
+       We need to pull the content below it up by the difference. */
+    const naturalH = poster.scrollHeight;
+    const shrink = naturalH * (1 - scale);
+    poster.style.marginBottom = `-${shrink}px`;
+    poster.style.marginTop = '0';
+    wrapper.style.height = '';
+  }
+}
+
+/* Run on load, orientation change, and resize */
+function runScale() { scalePoster(); }
+runScale();
+window.addEventListener('resize', runScale);
+window.addEventListener('orientationchange', () => {
+  /* iOS fires orientationchange BEFORE dimensions update; wait two frames */
+  requestAnimationFrame(() => requestAnimationFrame(runScale));
+});
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', runScale);
+}
+document.fonts && document.fonts.ready.then(runScale);
+
+/* ── Portrait nudge ── */
+function checkOrientation() {
+  const narrow = getVW() < 900;
+  const portrait = window.innerHeight > window.innerWidth;
+  if (narrow && portrait) {
+    if (!document.getElementById('orient-hint')) {
+      const hint = document.createElement('div');
+      hint.id = 'orient-hint';
+      hint.textContent = '📱 横屏效果更佳 · Rotate for best view';
+      Object.assign(hint.style, {
+        position: 'fixed', top: '0', left: '0', right: '0', zIndex: '9999',
+        background: 'rgba(60,40,15,0.88)', color: '#fff',
+        textAlign: 'center', padding: '10px 16px',
+        fontFamily: "'Noto Serif SC', serif", fontSize: '13px', letterSpacing: '1px',
+        backdropFilter: 'blur(8px)', cursor: 'pointer'
+      });
+      hint.addEventListener('click', () => hint.remove());
+      document.body.prepend(hint);
+    }
+  } else {
+    const h = document.getElementById('orient-hint');
+    if (h) h.remove();
+  }
+}
+checkOrientation();
+window.addEventListener('resize', checkOrientation);
+window.addEventListener('orientationchange', () => setTimeout(checkOrientation, 350));
+
+/* ── Stagger animation by DOM order ── */
+document.querySelectorAll('.tbl').forEach((t, i) => {
+  t.style.animationDelay = (0.05 + i * 0.04) + 's';
+});
+
+/* ── Legend highlight ── */
+let activeFilter = null;
+const tables = document.querySelectorAll('.tbl');
+
+document.getElementById('legend').addEventListener('click', function(e) {
+  const item = e.target.closest('.leg-item');
+  if (!item) return;
+  const filter = item.dataset.filter;
+
+  if (activeFilter === filter) {
+    activeFilter = null;
+    item.classList.remove('active');
+    tables.forEach(t => t.classList.remove('highlighted', 'dimmed'));
+    return;
+  }
+
+  document.querySelectorAll('.leg-item.active').forEach(el => el.classList.remove('active'));
+  activeFilter = filter;
+  item.classList.add('active');
+
+  tables.forEach(t => {
+    const matches = filter === 'main'
+      ? t.classList.contains('tbl-main')
+      : t.dataset.group === filter;
+    t.classList.toggle('highlighted', matches);
+    t.classList.toggle('dimmed', !matches);
+  });
+});
+</script>
+
+</body>
+</html>
